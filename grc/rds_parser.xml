@@ -4,7 +4,7 @@
 	<key>gr_rds_parser</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.parser($log, $debug)</make>
+	<make>rds.parser($log, $debug, $pty_locale)</make>
 	<callback>reset();$reset;</callback>
 	<param>
 		<name>Log</name>
@@ -32,6 +32,20 @@
 		<option>
 			<name>Disable</name>
 			<key>False</key>
+		</option>
+	</param>
+	<param>
+		<name>PTY Locale</name>
+		<key>pty_locale</key>
+		<value>0</value>
+		<type>int</type>
+		<option>
+			<name>Europe</name>
+			<key>0</key>
+		</option>
+		<option>
+			<name>North America</name>
+			<key>1</key>
 		</option>
 	</param>
 	<param>

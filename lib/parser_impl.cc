@@ -27,16 +27,17 @@
 using namespace gr::rds;
 
 parser::sptr
-parser::make(bool log, bool debug) {
-  return gnuradio::get_initial_sptr(new parser_impl(log, debug));
+parser::make(bool log, bool debug, unsigned char pty_locale) {
+  return gnuradio::get_initial_sptr(new parser_impl(log, debug, pty_locale));
 }
 
-parser_impl::parser_impl(bool log, bool debug)
+parser_impl::parser_impl(bool log, bool debug, unsigned char pty_locale)
 	: gr::block ("gr_rds_parser",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (0, 0, 0)),
 	log(log),
-	debug(debug)
+	debug(debug),
+	pty_locale(pty_locale)
 {
 	message_port_register_in(pmt::mp("in"));
 	set_msg_handler(pmt::mp("in"), boost::bind(&parser_impl::parse, this, _1));
