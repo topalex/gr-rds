@@ -27,10 +27,8 @@ static const unsigned int offset_word[5]={252,408,360,436,848};
 static const unsigned int syndrome[5]={383,14,303,663,748};
 static const char * const offset_name[]={"A","B","C","D","C'"};
 
-/* page 77, Annex F in the standard */
-static const unsigned int PTY_EUROPE = 0;
-static const unsigned int PTY_NORTH_AMERICA = 1;
-static       unsigned int pty_locale = PTY_EUROPE;
+/* Annex F of RBDS Standard Table F.1 (North America) and
+ * Table F.2 (Europe) */
 const std::string pty_table[32][2]={
 	{"Undefined",             "Undefined"},
 	{"News",                  "News"},

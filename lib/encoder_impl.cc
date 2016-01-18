@@ -29,10 +29,12 @@
 
 using namespace gr::rds;
 
-encoder_impl::encoder_impl ()
+encoder_impl::encoder_impl (unsigned char pty_locale)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
-			gr::io_signature::make (1, 1, sizeof(unsigned char))) {
+			gr::io_signature::make (1, 1, sizeof(unsigned char))), 
+	pty_locale(pty_locale)
+	{
 
 	message_port_register_in(pmt::mp("rds in"));
 	set_msg_handler(pmt::mp("rds in"), boost::bind(&encoder_impl::rds_in, this, _1));
@@ -495,7 +497,7 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr
-encoder::make () {
-	return gnuradio::get_initial_sptr(new encoder_impl());
+encoder::make (unsigned char pty_locale) {
+	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale));
 }
 

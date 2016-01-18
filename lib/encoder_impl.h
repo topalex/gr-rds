@@ -26,7 +26,7 @@ namespace rds {
 class encoder_impl : public encoder
 {
 public:
-	encoder_impl();
+	encoder_impl(unsigned char pty_locale);
 
 private:
 	~encoder_impl();
@@ -39,6 +39,7 @@ private:
 	unsigned int  checkword[4];
 	unsigned int  block[4];
 	unsigned char **buffer;
+	unsigned char pty_locale;
 
 	// FIXME make this a struct (or a class)
 	unsigned char PTY;

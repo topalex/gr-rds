@@ -4,7 +4,21 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder()</make>
+	<make>rds.encoder($pty_locale)</make>
+	<param>
+		<name>PTY Locale</name>
+		<key>pty_locale</key>
+		<value>0</value>
+		<type>int</type>
+		<option>
+			<name>Europe</name>
+			<key>0</key>
+		</option>
+		<option>
+			<name>North America</name>
+			<key>1</key>
+		</option>
+	</param>
 	<sink>
 		<name>rds in</name>
 		<type>message</type>
