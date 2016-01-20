@@ -3653,7 +3653,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>0</value>
+      <value>gain</value>
     </param>
     <param>
       <key>ant10</key>
