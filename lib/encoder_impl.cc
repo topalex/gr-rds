@@ -335,7 +335,7 @@ void encoder_impl::count_groups(void) {
 /* create the 4 infowords, according to group type.
  * then calculate checkwords and put everything in the groups */
 void encoder_impl::create_group(const int group_type, const bool AB) {
-	
+
 	infoword[0] = PI;
 	infoword[1] = (((group_type & 0xf) << 12) | (AB << 11) | (TP << 10) | (PTY << 5));
 
@@ -415,12 +415,12 @@ void encoder_impl::prepare_group3a(void) {
 }
 
 /* see page 28 and Annex G, page 81 in the standard */
-/* FIXME this is supposed to be transmitted only once per minute, when 
+/* FIXME this is supposed to be transmitted only once per minute, when
  * the minute changes */
 void encoder_impl::prepare_group4a(void) {
 	time_t rightnow;
 	tm *utc;
-	
+
 	time(&rightnow);
 	//printf("%s", asctime(localtime(&rightnow)));
 
@@ -462,7 +462,7 @@ void encoder_impl::prepare_buffer(int which) {
 	int q=0, i=0, j=0, a=0, b=0;
 	unsigned char temp[13]; // 13*8=104
 	std::memset(temp, 0, 13);
-	
+
 	for(q = 0; q < 104; q++) {
 		a = floor(q / 26);
 		b = 25 - q % 26;
@@ -483,7 +483,7 @@ int encoder_impl::work (int noutput_items,
 
 	gr::thread::scoped_lock lock(d_mutex);
 	unsigned char *out = (unsigned char *) output_items[0];
-	
+
 	for(int i = 0; i < noutput_items; i++) {
 		out[i] = buffer[d_current_buffer][d_buffer_bit_counter];
 		if(++d_buffer_bit_counter > 103) {
@@ -492,7 +492,7 @@ int encoder_impl::work (int noutput_items,
 			d_current_buffer = d_current_buffer % nbuffers;
 		}
 	}
-	
+
 	return noutput_items;
 }
 
