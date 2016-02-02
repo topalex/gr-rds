@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Bastian Bloessl <bloessl@ccs-labs.org>
+ * Copyright (C) 2014, 2016 Bastian Bloessl <bloessl@ccs-labs.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -432,15 +432,15 @@ void encoder_impl::prepare_group4a(void) {
 	int D = utc->tm_mday;
 	int M = utc->tm_mon + 1;  // January: M=0
 	int Y = utc->tm_year;
-	double toffset=localtime(&rightnow)->tm_hour-h;
-	
+	int toffset=localtime(&rightnow)->tm_hour-h;
+
 	int L = ((M == 1) || (M == 2)) ? 1 : 0;
 	int mjd=14956+D+int((Y-L)*365.25)+int((M+1+L*12)*30.6001);
-	
+
 	infoword[1]=infoword[1]|((mjd>>15)&0x3);
 	infoword[2]=(((mjd>>7)&0xff)<<8)|((mjd&0x7f)<<1)|((h>>4)&0x1);
 	infoword[3]=((h&0xf)<<12)|(((m>>2)&0xf)<<8)|((m&0x3)<<6)|
-		((toffset>0?0:1)<<5)|((abs((int)toffset*2))&0x1f);
+		((toffset>0?0:1)<<5)|((abs(toffset*2))&0x1f);
 }
 
 // for now single-group only
