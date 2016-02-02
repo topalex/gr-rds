@@ -440,7 +440,7 @@ void encoder_impl::prepare_group4a(void) {
 	infoword[1]=infoword[1]|((mjd>>15)&0x3);
 	infoword[2]=(((mjd>>7)&0xff)<<8)|((mjd&0x7f)<<1)|((h>>4)&0x1);
 	infoword[3]=((h&0xf)<<12)|(((m>>2)&0xf)<<8)|((m&0x3)<<6)|
-		((toffset>0?0:1)<<5)|((abs(toffset*2))&0x1f);
+		((toffset>0?0:1)<<5)|((abs((int)toffset*2))&0x1f);
 }
 
 // for now single-group only
