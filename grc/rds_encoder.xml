@@ -4,7 +4,7 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder($pty_locale, $ms, $ps, $af1, $af2, $tp, $ta)</make>
+	<make>rds.encoder($pty_locale, $pty, $ms, $ps, $af1, $af2, $tp, $ta)</make>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
@@ -19,6 +19,140 @@
 			<key>1</key>
 		</option>
 	</param>
+    <param>
+        <name>PTY</name>
+        <key>pty</key>
+        <value>14</value>
+        <type>int</type>
+        <option>
+            <name>Undefined</name>
+            <key>0</key>
+        </option>
+        <option>
+            <name>News</name>
+            <key>1</key>
+        </option>
+        <option>
+            <name>Current Affairs / Information</name>
+            <key>2</key>
+        </option>
+        <option>
+            <name>Information / Sports</name>
+            <key>3</key>
+        </option>
+        <option>
+            <name>Sport / Talk</name>
+            <key>4</key>
+        </option>
+        <option>
+            <name>Education / Rock</name>
+            <key>5</key>
+        </option>
+        <option>
+            <name>Drama / Classic Rock</name>
+            <key>6</key>
+        </option>
+        <option>
+            <name>Culture / Adult Hits</name>
+            <key>7</key>
+        </option>
+        <option>
+            <name>Science / Soft Rock</name>
+            <key>8</key>
+        </option>
+        <option>
+            <name>Varied / Top 40</name>
+            <key>9</key>
+        </option>
+        <option>
+            <name>Pop Music / Country</name>
+            <key>10</key>
+        </option>
+        <option>
+            <name>Rock Music / Oldies</name>
+            <key>11</key>
+        </option>
+        <option>
+            <name>Easy Listening / Soft</name>
+            <key>12</key>
+        </option>
+        <option>
+            <name>Light Classical / Nostalgia</name>
+            <key>13</key>
+        </option>
+        <option>
+            <name>Serious Classical / Jazz</name>
+            <key>14</key>
+        </option>
+        <option>
+            <name>Other Music / Classical</name>
+            <key>15</key>
+        </option>
+        <option>
+            <name>Weather / Rhythm &amp; Blues</name>
+            <key>16</key>
+        </option>
+        <option>
+            <name>Finance / Soft Rhythm &amp; Blues</name>
+            <key>17</key>
+        </option>
+        <option>
+            <name>Children’s Programmes / Language</name>
+            <key>18</key>
+        </option>
+        <option>
+            <name>Social Affairs / Religious Music</name>
+            <key>19</key>
+        </option>
+        <option>
+            <name>Religion / Religious Talk</name>
+            <key>20</key>
+        </option>
+        <option>
+            <name>Phone-In / Personality</name>
+            <key>21</key>
+        </option>
+        <option>
+            <name>Travel / Public</name>
+            <key>22</key>
+        </option>
+        <option>
+            <name>Leisure / College</name>
+            <key>23</key>
+        </option>
+        <option>
+            <name>Jazz Music / Spanish Talk</name>
+            <key>24</key>
+        </option>
+        <option>
+            <name>Country Music / Spanish Music</name>
+            <key>25</key>
+        </option>
+        <option>
+            <name>National Music / Hip Hop</name>
+            <key>26</key>
+        </option>
+        <option>
+            <name>Oldies Music / Unassigned</name>
+            <key>27</key>
+        </option>
+        <option>
+            <name>Folk Music / Unassigned</name>
+            <key>28</key>
+        </option>
+        <option>
+            <name>Documentary / Weather</name>
+            <key>29</key>
+        </option>
+        <option>
+            <name>Alarm Test / Emergency Test</name>
+            <key>30</key>
+        </option>
+        <option>
+            <name>Alarm / Emergency</name>
+            <key>31</key>
+        </option>
+    </param>
 	<param>
 		<name>MS</name>
 		<key>ms</key>
