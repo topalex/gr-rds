@@ -4,7 +4,10 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder($pty_locale, $pty, $ms, $ps, $af1, $af2, $tp, $ta)</make>
+	<make>rds.encoder(
+    $pty_locale, $pty, $ms, $ps, $af1, $af2, $tp, $ta,
+    $pi_country_code, $pi_coverage_area, $pi_reference_number
+)</make>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
@@ -213,6 +216,144 @@
             <key>False</key>
         </option>
     </param>
+    <param>
+        <name>PI Country Code</name>
+        <key>pi_country_code</key>
+        <value>13</value>
+        <type>int</type>
+        <option>
+            <name>DE</name>
+            <key>1</key>
+        </option>
+        <option>
+            <name>DZ</name>
+            <key>2</key>
+        </option>
+        <option>
+            <name>AD</name>
+            <key>3</key>
+        </option>
+        <option>
+            <name>IL</name>
+            <key>4</key>
+        </option>
+        <option>
+            <name>IT</name>
+            <key>5</key>
+        </option>
+        <option>
+            <name>BE</name>
+            <key>6</key>
+        </option>
+        <option>
+            <name>RU</name>
+            <key>7</key>
+        </option>
+        <option>
+            <name>PS</name>
+            <key>8</key>
+        </option>
+        <option>
+            <name>AL</name>
+            <key>9</key>
+        </option>
+        <option>
+            <name>AT</name>
+            <key>10</key>
+        </option>
+        <option>
+            <name>HU</name>
+            <key>11</key>
+        </option>
+        <option>
+            <name>MT</name>
+            <key>12</key>
+        </option>
+        <option>
+            <name>DE</name>
+            <key>13</key>
+        </option>
+        <option>
+            <name>EG</name>
+            <key>15</key>
+        </option>
+    </param>
+    <param>
+        <name>PI Coverage Area</name>
+        <key>pi_coverage_area</key>
+        <value>3</value>
+        <type>int</type>
+        <option>
+            <name>Local</name>
+            <key>0</key>
+        </option>
+        <option>
+            <name>International</name>
+            <key>1</key>
+        </option>
+        <option>
+            <name>National</name>
+            <key>2</key>
+        </option>
+        <option>
+            <name>Supra-regional</name>
+            <key>3</key>
+        </option>
+        <option>
+            <name>Regional 1</name>
+            <key>4</key>
+        </option>
+        <option>
+            <name>Regional 2</name>
+            <key>5</key>
+        </option>
+        <option>
+            <name>Regional 3</name>
+            <key>6</key>
+        </option>
+        <option>
+            <name>Regional 4</name>
+            <key>7</key>
+        </option>
+        <option>
+            <name>Regional 5</name>
+            <key>8</key>
+        </option>
+        <option>
+            <name>Regional 6</name>
+            <key>9</key>
+        </option>
+        <option>
+            <name>Regional 7</name>
+            <key>10</key>
+        </option>
+        <option>
+            <name>Regional 8</name>
+            <key>11</key>
+        </option>
+        <option>
+            <name>Regional 9</name>
+            <key>12</key>
+        </option>
+        <option>
+            <name>Regional 10</name>
+            <key>13</key>
+        </option>
+        <option>
+            <name>Regional 11</name>
+            <key>14</key>
+        </option>
+        <option>
+            <name>Regional 12</name>
+            <key>15</key>
+        </option>
+    </param>
+    <param>
+        <name>PI Program Reference Number</name>
+        <key>pi_reference_number</key>
+        <value>147</value>
+        <type>int</type>
+    </param>
 	<sink>
 		<name>rds in</name>
 		<type>message</type>
@@ -223,10 +364,12 @@
 		<type>byte</type>
 	</source>
     <doc>
+PTY: Program Type (depending on PTY locale)
 MS: Speech/Music
 PS: Program Service Name
 AF: Alternate Frequency
 TP: Traffic Program
 TA: Traffic Announcment
+PI: Program Identification (country code, coverage area, reference number)
     </doc>
 </block>

@@ -751,7 +751,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(552, 316)</value>
+      <value>(544, 380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -802,7 +802,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 103)</value>
+      <value>(32, 127)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1069,7 +1069,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(280, 316)</value>
+      <value>(272, 380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1116,7 +1116,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(528, 124)</value>
+      <value>(528, 148)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1202,7 +1202,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(280, 268)</value>
+      <value>(272, 332)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1245,7 +1245,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(600, 268)</value>
+      <value>(592, 332)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1288,7 +1288,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(912, 289)</value>
+      <value>(904, 353)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1398,7 +1398,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 75)</value>
+      <value>(184, 78)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1419,6 +1419,18 @@
     <param>
       <key>minoutbuf</key>
       <value>0</value>
+    </param>
+    <param>
+      <key>pi_country_code</key>
+      <value>13</value>
+    </param>
+    <param>
+      <key>pi_coverage_area</key>
+      <value>3</value>
+    </param>
+    <param>
+      <key>pi_reference_number</key>
+      <value>147</value>
     </param>
     <param>
       <key>ps</key>
@@ -1701,7 +1713,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(400, 268)</value>
+      <value>(392, 332)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1791,7 +1803,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(728, 274)</value>
+      <value>(720, 338)</value>
     </param>
     <param>
       <key>_rotation</key>

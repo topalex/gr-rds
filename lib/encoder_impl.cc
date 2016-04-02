@@ -31,7 +31,8 @@ using namespace gr::rds;
 
 encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
                             std::string ps, double af1, double af2, bool tp,
-                            bool ta)
+                            bool ta, int pi_country_code, int pi_coverage_area,
+                            int pi_reference_number)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (1, 1, sizeof(unsigned char))),
@@ -51,7 +52,9 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
 	d_current_buffer     = 0;
 	d_buffer_bit_counter = 0;
 
-	PI                   = 0xd393;
+	PI                   = (pi_country_code & 0xF) << 12 |
+                           (pi_coverage_area & 0xF) << 8 |
+                           (pi_reference_number);
 	PTY                  = pty;     // programm type (education)
 	TP                   = tp;   // traffic programm
 	TA                   = ta;   // traffic announcement
@@ -509,9 +512,11 @@ int encoder_impl::work (int noutput_items,
 
 encoder::sptr
 encoder::make (unsigned char pty_locale, int pty, bool ms, std::string ps,
-               double af1, double af2, bool tp, bool ta) {
+               double af1, double af2, bool tp, bool ta, int pi_country_code,
+               int pi_coverage_area, int pi_reference_number) {
 	return gnuradio::get_initial_sptr(
-        new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta)
+        new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,
+                         pi_country_code, pi_coverage_area, pi_reference_number)
     );
 }
 

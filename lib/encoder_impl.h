@@ -27,7 +27,8 @@ class encoder_impl : public encoder
 {
 public:
 	encoder_impl(unsigned char pty_locale, int pty, bool ms, std::string ps,
-                 double af1, double af2, bool tp, bool ta);
+                 double af1, double af2, bool tp, bool ta, int pi_country_code,
+                 int pi_coverage_area, int pi_reference_number);
 
 private:
 	~encoder_impl();
