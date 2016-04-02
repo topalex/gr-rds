@@ -6,7 +6,7 @@
 	<import>import rds</import>
 	<make>rds.encoder(
     $pty_locale, $pty, $ms, $ps, $af1, $af2, $tp, $ta,
-    $pi_country_code, $pi_coverage_area, $pi_reference_number
+    $pi_country_code, $pi_coverage_area, $pi_reference_number, $radiotext
 )</make>
 	<param>
 		<name>PTY Locale</name>
@@ -354,6 +354,12 @@
         <value>147</value>
         <type>int</type>
     </param>
+    <param>
+        <name>Radiotext</name>
+        <key>radiotext</key>
+        <value>GNU Radio &lt;3</value>
+        <type>string</type>
+    </param>
 	<sink>
 		<name>rds in</name>
 		<type>message</type>
@@ -371,5 +377,6 @@ AF: Alternate Frequency
 TP: Traffic Program
 TA: Traffic Announcment
 PI: Program Identification (country code, coverage area, reference number)
+Radiotext: Radiotext (obviously)
     </doc>
 </block>

@@ -32,7 +32,7 @@ using namespace gr::rds;
 encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
                             std::string ps, double af1, double af2, bool tp,
                             bool ta, int pi_country_code, int pi_coverage_area,
-                            int pi_reference_number)
+                            int pi_reference_number, std::string radiotext)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (1, 1, sizeof(unsigned char))),
@@ -66,7 +66,7 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
 	event                = 1340;
 	location             = 11023;
 
-	set_radiotext(std::string("GNU Radio <3"));
+	set_radiotext(std::string(radiotext));
 	set_ps(ps);
 
 	// which groups are set
@@ -513,10 +513,13 @@ int encoder_impl::work (int noutput_items,
 encoder::sptr
 encoder::make (unsigned char pty_locale, int pty, bool ms, std::string ps,
                double af1, double af2, bool tp, bool ta, int pi_country_code,
-               int pi_coverage_area, int pi_reference_number) {
+               int pi_coverage_area, int pi_reference_number,
+               std::string radiotext) {
+
 	return gnuradio::get_initial_sptr(
         new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,
-                         pi_country_code, pi_coverage_area, pi_reference_number)
+                         pi_country_code, pi_coverage_area, pi_reference_number,
+                         radiotext)
     );
 }
 
