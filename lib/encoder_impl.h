@@ -26,7 +26,7 @@ namespace rds {
 class encoder_impl : public encoder
 {
 public:
-	encoder_impl(unsigned char pty_locale, std::string ps);
+	encoder_impl(unsigned char pty_locale, bool ms, std::string ps);
 
 private:
 	~encoder_impl();

@@ -29,7 +29,7 @@
 
 using namespace gr::rds;
 
-encoder_impl::encoder_impl (unsigned char pty_locale, std::string ps)
+encoder_impl::encoder_impl (unsigned char pty_locale, bool ms, std::string ps)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (1, 1, sizeof(unsigned char))),
@@ -53,7 +53,7 @@ encoder_impl::encoder_impl (unsigned char pty_locale, std::string ps)
 	PTY                  = 14;     // programm type (education)
 	TP                   = true;   // traffic programm
 	TA                   = false;   // traffic announcement
-	MS                   = true;   // music/speech switch (1=music)
+	MS                   = ms;   // music/speech switch (1=music)
 	AF1                  = 89.8;
 	AF2                  = 102.3;
 	DP                   = 3;
@@ -505,7 +505,7 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr
-encoder::make (unsigned char pty_locale, std::string ps) {
-	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale, ps));
+encoder::make (unsigned char pty_locale, bool ms, std::string ps) {
+	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale, ms, ps));
 }
 
