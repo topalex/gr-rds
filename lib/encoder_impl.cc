@@ -29,10 +29,10 @@
 
 using namespace gr::rds;
 
-encoder_impl::encoder_impl (unsigned char pty_locale)
+encoder_impl::encoder_impl (unsigned char pty_locale, std::string ps)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
-			gr::io_signature::make (1, 1, sizeof(unsigned char))), 
+			gr::io_signature::make (1, 1, sizeof(unsigned char))),
 	pty_locale(pty_locale)
 	{
 
@@ -62,7 +62,7 @@ encoder_impl::encoder_impl (unsigned char pty_locale)
 	location             = 11023;
 
 	set_radiotext(std::string("GNU Radio <3"));
-	set_ps(std::string("WDR 3"));
+	set_ps(ps);
 
 	// which groups are set
 	groups[ 0] = 1; // basic tuning and switching
@@ -213,6 +213,7 @@ void encoder_impl::rds_in(pmt::pmt_t msg) {
 	rebuild();
 }
 
+// music/speech
 void encoder_impl::set_ms(bool ms) {
 	MS = ms;
 	std::cout << "setting Music/Speech code to " << ms << " (";
@@ -220,22 +221,27 @@ void encoder_impl::set_ms(bool ms) {
 	else std::cout << "speech)" << std::endl;
 }
 
+// alternate frequency
 void encoder_impl::set_af1(double af1) {
 	AF1 = af1;
 }
 
+// alternate frequency
 void encoder_impl::set_af2(double af2) {
 	AF2 = af2;
 }
 
+// traffic program indication
 void encoder_impl::set_tp(bool tp) {
 	TP = tp;
 }
 
+// traffic announcment
 void encoder_impl::set_ta(bool ta) {
 	TA = ta;
 }
 
+// program type
 void encoder_impl::set_pty(unsigned int pty) {
 	if(pty > 31) {
 		std::cout << "warning: ignoring invalid pty: " << std::endl;
@@ -245,6 +251,7 @@ void encoder_impl::set_pty(unsigned int pty) {
 	}
 }
 
+// program identification
 void encoder_impl::set_pi(unsigned int pi) {
 	if(pi > 0xFFFF) {
 		std::cout << "warning: ignoring invalid pi: " << std::endl;
@@ -260,7 +267,7 @@ void encoder_impl::set_pi(unsigned int pi) {
 	}
 }
 
-
+// radiotext
 void encoder_impl::set_radiotext(std::string text) {
 		size_t len = std::min(sizeof(radiotext), text.length());
 
@@ -268,15 +275,16 @@ void encoder_impl::set_radiotext(std::string text) {
 		std::memcpy(radiotext, text.c_str(), len);
 }
 
-void encoder_impl::set_ps(std::string text) {
-		size_t len = std::min(sizeof(PS), text.length());
+// program service name
+void encoder_impl::set_ps(std::string ps) {
+		size_t len = std::min(sizeof(PS), ps.length());
 
 		std::memset(PS, ' ', sizeof(PS));
-		std::memcpy(PS, text.c_str(), len);
+		std::memcpy(PS, ps.c_str(), len);
 }
 
 /* see Annex B, page 64 of the standard */
-unsigned int encoder_impl::calc_syndrome(unsigned long message, 
+unsigned int encoder_impl::calc_syndrome(unsigned long message,
 		unsigned char mlen) {
 
 	unsigned long reg = 0;
@@ -443,7 +451,7 @@ void encoder_impl::prepare_group4a(void) {
 		((toffset>0?0:1)<<5)|((abs(toffset*2))&0x1f);
 }
 
-// for now single-group only
+// TMC Alert-C - http://tinyurl.com/alert-c-coding-handbook
 void encoder_impl::prepare_group8a(void) {
 	infoword[1] = infoword[1] | (1 << 3) | (DP & 0x7);
 	infoword[2] = (1 << 15) | ((extent & 0x7) << 11) | (event & 0x7ff);
@@ -497,7 +505,7 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr
-encoder::make (unsigned char pty_locale) {
-	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale));
+encoder::make (unsigned char pty_locale, std::string ps) {
+	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale, ps));
 }
 

@@ -4,7 +4,7 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder($pty_locale)</make>
+	<make>rds.encoder($pty_locale, $ps)</make>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
@@ -18,6 +18,13 @@
 			<name>North America</name>
 			<key>1</key>
 		</option>
+	</param>
+	<param>
+		<name>PS</name>
+		<!-- <description>Program Service Name</description> -->
+		<key>ps</key>
+		<value>WDR 3</value>
+		<type>string</type>
 	</param>
 	<sink>
 		<name>rds in</name>
