@@ -1373,6 +1373,14 @@
   <block>
     <key>gr_rds_encoder</key>
     <param>
+      <key>af1</key>
+      <value>89.8e6</value>
+    </param>
+    <param>
+      <key>af2</key>
+      <value>102.3e6</value>
+    </param>
+    <param>
       <key>alias</key>
       <value></value>
     </param>
@@ -1390,7 +1398,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(208, 101)</value>
+      <value>(208, 80)</value>
     </param>
     <param>
       <key>_rotation</key>

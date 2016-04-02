@@ -4,7 +4,7 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder($pty_locale, $ms, $ps)</make>
+	<make>rds.encoder($pty_locale, $ms, $ps, $af1, $af2)</make>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
@@ -35,11 +35,22 @@
 	</param>
 	<param>
 		<name>PS</name>
-		<!-- <description>Program Service Name</description> -->
 		<key>ps</key>
 		<value>WDR 3</value>
 		<type>string</type>
 	</param>
+    <param>
+        <name>AF1</name>
+        <key>af1</key>
+        <value>89.8e6</value>
+        <type>float</type>
+    </param>
+    <param>
+        <name>AF2</name>
+        <key>af2</key>
+        <value>102.3e6</value>
+        <type>float</type>
+    </param>
 	<sink>
 		<name>rds in</name>
 		<type>message</type>
@@ -52,5 +63,6 @@
     <doc>
 MS: Speech/Music
 PS: Program Service Name
+AF: Alternate Frequency
     </doc>
 </block>

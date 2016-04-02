@@ -29,7 +29,8 @@
 
 using namespace gr::rds;
 
-encoder_impl::encoder_impl (unsigned char pty_locale, bool ms, std::string ps)
+encoder_impl::encoder_impl (unsigned char pty_locale, bool ms, std::string ps,
+                            double af1, double af2)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (1, 1, sizeof(unsigned char))),
@@ -54,8 +55,8 @@ encoder_impl::encoder_impl (unsigned char pty_locale, bool ms, std::string ps)
 	TP                   = true;   // traffic programm
 	TA                   = false;   // traffic announcement
 	MS                   = ms;   // music/speech switch (1=music)
-	AF1                  = 89.8;
-	AF2                  = 102.3;
+	AF1                  = af1;
+	AF2                  = af2;
 	DP                   = 3;
 	extent               = 2;
 	event                = 1340;
@@ -377,7 +378,8 @@ void encoder_impl::prepare_group0(const bool AB) {
 		infoword[1] = infoword[1] | 0x5;  // d0=1 (stereo), d1-3=0
 	infoword[1] = infoword[1] | (d_g0_counter & 0x3);
 	if(!AB)
-		infoword[2] = ((encode_af(AF1) & 0xff) << 8) | (encode_af(AF2) & 0xff);
+		infoword[2] = ((encode_af(AF1/1000000) & 0xff) << 8) |
+                       (encode_af(AF2/1000000) & 0xff);
 	else
 		infoword[2] = PI;
 	infoword[3] = (PS[2 * d_g0_counter] << 8) | PS[2 * d_g0_counter + 1];
@@ -505,7 +507,10 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr
-encoder::make (unsigned char pty_locale, bool ms, std::string ps) {
-	return gnuradio::get_initial_sptr(new encoder_impl(pty_locale, ms, ps));
+encoder::make (unsigned char pty_locale, bool ms, std::string ps, double af1,
+               double af2) {
+	return gnuradio::get_initial_sptr(
+        new encoder_impl(pty_locale, ms, ps, af1, af2)
+    );
 }
 
