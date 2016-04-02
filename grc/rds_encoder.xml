@@ -4,7 +4,7 @@
 	<key>gr_rds_encoder</key>
 	<category>RDS</category>
 	<import>import rds</import>
-	<make>rds.encoder($pty_locale, $ms, $ps, $af1, $af2, $tp)</make>
+	<make>rds.encoder($pty_locale, $ms, $ps, $af1, $af2, $tp, $ta)</make>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
@@ -65,6 +65,20 @@
             <key>False</key>
         </option>
     </param>
+    <param>
+        <name>TA</name>
+        <key>ta</key>
+        <value>False</value>
+        <type>bool</type>
+        <option>
+            <name>True</name>
+            <key>True</key>
+        </option>
+        <option>
+            <name>False</name>
+            <key>False</key>
+        </option>
+    </param>
 	<sink>
 		<name>rds in</name>
 		<type>message</type>
@@ -79,5 +93,6 @@ MS: Speech/Music
 PS: Program Service Name
 AF: Alternate Frequency
 TP: Traffic Program
+TA: Traffic Announcment
     </doc>
 </block>
