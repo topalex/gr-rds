@@ -30,14 +30,13 @@
 using namespace gr::rds;
 
 encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
-                            std::string ps, double af1, double af2, bool tp,
-                            bool ta, int pi_country_code, int pi_coverage_area,
-                            int pi_reference_number, std::string radiotext)
+		std::string ps, double af1, double af2, bool tp,
+		bool ta, int pi_country_code, int pi_coverage_area,
+		int pi_reference_number, std::string radiotext)
 	: gr::sync_block ("gr_rds_encoder",
 			gr::io_signature::make (0, 0, 0),
 			gr::io_signature::make (1, 1, sizeof(unsigned char))),
-	pty_locale(pty_locale)
-	{
+	pty_locale(pty_locale) {
 
 	message_port_register_in(pmt::mp("rds in"));
 	set_msg_handler(pmt::mp("rds in"), boost::bind(&encoder_impl::rds_in, this, _1));
@@ -53,8 +52,8 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
 	d_buffer_bit_counter = 0;
 
 	PI                   = (pi_country_code & 0xF) << 12 |
-                           (pi_coverage_area & 0xF) << 8 |
-                           (pi_reference_number);
+	                       (pi_coverage_area & 0xF) << 8 |
+	                       (pi_reference_number);
 	PTY                  = pty;     // programm type (education)
 	TP                   = tp;      // traffic programm
 	TA                   = ta;      // traffic announcement
@@ -385,11 +384,12 @@ void encoder_impl::prepare_group0(const bool AB) {
 	if(d_g0_counter == 3)
 		infoword[1] = infoword[1] | 0x5;  // d0=1 (stereo), d1-3=0
 	infoword[1] = infoword[1] | (d_g0_counter & 0x3);
-	if(!AB)
+	if(!AB) {
 		infoword[2] = ((encode_af(AF1/1000000) & 0xff) << 8) |
-                       (encode_af(AF2/1000000) & 0xff);
-	else
+		               (encode_af(AF2/1000000) & 0xff);
+	} else {
 		infoword[2] = PI;
+	}
 	infoword[3] = (PS[2 * d_g0_counter] << 8) | PS[2 * d_g0_counter + 1];
 	d_g0_counter++;
 	if(d_g0_counter > 3) d_g0_counter = 0;
@@ -442,8 +442,8 @@ void encoder_impl::prepare_group4a(void) {
 	time(&rightnow);
 	//printf("%s", asctime(localtime(&rightnow)));
 
-/* we're supposed to send UTC time; the receiver should then add the
- * local timezone offset */
+	/* we're supposed to send UTC time; the receiver should then add the
+	* local timezone offset */
 	utc = gmtime(&rightnow);
 	int m = utc->tm_min;
 	int h = utc->tm_hour;
@@ -515,14 +515,13 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr encoder::make (unsigned char pty_locale, int pty, bool ms,
-                             std::string ps, double af1, double af2, bool tp,
-                             bool ta, int pi_country_code, int pi_coverage_area,
-                             int pi_reference_number, std::string radiotext) {
+		std::string ps, double af1, double af2, bool tp,
+		bool ta, int pi_country_code, int pi_coverage_area,
+		int pi_reference_number, std::string radiotext) {
 
 	return gnuradio::get_initial_sptr(
-        new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,
-                         pi_country_code, pi_coverage_area, pi_reference_number,
-                         radiotext)
-    );
+			new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,
+					pi_country_code, pi_coverage_area, pi_reference_number,
+					radiotext));
 }
 
