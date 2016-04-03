@@ -30,7 +30,7 @@
 using namespace gr::rds;
 
 encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
-		std::string ps, double af1, double af2, bool tp,
+		std::string ps, double af1, bool tp,
 		bool ta, int pi_country_code, int pi_coverage_area,
 		int pi_reference_number, std::string radiotext)
 	: gr::sync_block ("gr_rds_encoder",
@@ -59,7 +59,6 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
 	TA                   = ta;      // traffic announcement
 	MS                   = ms;      // music/speech switch (1=music)
 	AF1                  = af1;     // alternate frequency 1
-	AF2                  = af2;     // alternate frequency 2
 
 	DP                   = 3;
 	extent               = 2;
@@ -204,12 +203,6 @@ void encoder_impl::rds_in(pmt::pmt_t msg) {
 		cout << "set af1: " << d1 << endl;
 		set_af1(d1);
 
-	// AF2
-	} else if(phrase_parse(in.begin(), in.end(),
-			"af2" >> double_, space, d1)) {
-		cout << "set af2: " << d1 << endl;
-		set_af2(d1);
-
 	// no match / unkonwn command
 	} else {
 		cout << "not understood" << endl;
@@ -229,11 +222,6 @@ void encoder_impl::set_ms(bool ms) {
 // alternate frequency
 void encoder_impl::set_af1(double af1) {
 	AF1 = af1;
-}
-
-// alternate frequency
-void encoder_impl::set_af2(double af2) {
-	AF2 = af2;
 }
 
 // traffic program indication
@@ -314,6 +302,7 @@ unsigned int encoder_impl::calc_syndrome(unsigned long message,
 /* see page 41 in the standard; this is an implementation of AF method A
  * FIXME need to add code that declares the number of AF to follow... */
 unsigned int encoder_impl::encode_af(const double af) {
+	std::cout << "encoding " << af << std::endl;
 	unsigned int af_code = 0;
 	if(( af >= 87.6) && (af <= 107.9))
 		af_code = nearbyint((af - 87.5) * 10);
@@ -379,14 +368,15 @@ void encoder_impl::create_group(const int group_type, const bool AB) {
 }
 
 void encoder_impl::prepare_group0(const bool AB) {
+	std::cout << "preparing 0" << std::endl;
 	infoword[1] = infoword[1] | (TA << 4) | (MS << 3);
 	//FIXME: make DI configurable
 	if(d_g0_counter == 3)
 		infoword[1] = infoword[1] | 0x5;  // d0=1 (stereo), d1-3=0
 	infoword[1] = infoword[1] | (d_g0_counter & 0x3);
 	if(!AB) {
-		infoword[2] = ((encode_af(AF1/1000000) & 0xff) << 8) |
-		               (encode_af(AF2/1000000) & 0xff);
+		infoword[2] = (225 << 8) | // 1 AF follows
+			(encode_af(AF1/1000000) & 0xff);
 	} else {
 		infoword[2] = PI;
 	}
@@ -515,12 +505,12 @@ int encoder_impl::work (int noutput_items,
 }
 
 encoder::sptr encoder::make (unsigned char pty_locale, int pty, bool ms,
-		std::string ps, double af1, double af2, bool tp,
+		std::string ps, double af1, bool tp,
 		bool ta, int pi_country_code, int pi_coverage_area,
 		int pi_reference_number, std::string radiotext) {
 
 	return gnuradio::get_initial_sptr(
-			new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,
+			new encoder_impl(pty_locale, pty, ms, ps, af1, tp, ta,
 					pi_country_code, pi_coverage_area, pi_reference_number,
 					radiotext));
 }

@@ -5,7 +5,7 @@
 	<category>RDS</category>
 	<import>import rds</import>
 	<make>rds.encoder($pty_locale, $pty, $ms, $ps, $af1,
-			$af2, $tp, $ta, $pi_country_code, $pi_coverage_area,
+			$tp, $ta, $pi_country_code, $pi_coverage_area,
 			$pi_reference_number, $radiotext)
 	</make>
 	<callback>set_ps($ps)</callback>
@@ -181,12 +181,6 @@
 		<name>AF1</name>
 		<key>af1</key>
 		<value>89.8e6</value>
-		<type>float</type>
-	</param>
-	<param>
-		<name>AF2</name>
-		<key>af2</key>
-		<value>102.3e6</value>
 		<type>float</type>
 	</param>
 	<param>

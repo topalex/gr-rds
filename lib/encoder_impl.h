@@ -27,7 +27,7 @@ class encoder_impl : public encoder
 {
 public:
 	encoder_impl(unsigned char pty_locale, int pty, bool ms, std::string ps,
-                 double af1, double af2, bool tp, bool ta, int pi_country_code,
+                 double af1, bool tp, bool ta, int pi_country_code,
                  int pi_coverage_area, int pi_reference_number,
                  std::string radiotext);
 
@@ -55,7 +55,6 @@ private:
 	bool MS;
 	unsigned int PI;
 	double AF1;
-	double AF2;
 
 	int DP;
 	int extent;
@@ -85,7 +84,6 @@ private:
 	void set_tp(bool tp);
 	void set_ta(bool ta);
 	void set_af1(double af1);
-	void set_af2(double af2);
 	void set_pty(unsigned int pty);
 	void set_pi(unsigned int pty);
 	void set_radiotext(std::string text);
