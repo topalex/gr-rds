@@ -31,6 +31,8 @@ public:
                      double af1, double af2, bool tp, bool ta,
                      int pi_country_code, int pi_coverage_area,
                      int pi_reference_number, std::string radiotext);
+
+    virtual void set_ps(std::string ps) = 0;
 };
 
 }

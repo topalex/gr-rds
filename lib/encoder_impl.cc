@@ -56,11 +56,12 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
                            (pi_coverage_area & 0xF) << 8 |
                            (pi_reference_number);
 	PTY                  = pty;     // programm type (education)
-	TP                   = tp;   // traffic programm
-	TA                   = ta;   // traffic announcement
-	MS                   = ms;   // music/speech switch (1=music)
-	AF1                  = af1;
-	AF2                  = af2;
+	TP                   = tp;      // traffic programm
+	TA                   = ta;      // traffic announcement
+	MS                   = ms;      // music/speech switch (1=music)
+	AF1                  = af1;     // alternate frequency 1
+	AF2                  = af2;     // alternate frequency 2
+
 	DP                   = 3;
 	extent               = 2;
 	event                = 1340;
@@ -286,6 +287,12 @@ void encoder_impl::set_ps(std::string ps) {
 
 		std::memset(PS, ' ', sizeof(PS));
 		std::memcpy(PS, ps.c_str(), len);
+
+        using std::cout;
+        using std::endl;
+        cout << "PS set to \"" << ps << "\"" << endl;
+        rebuild();
+        rebuild();
 }
 
 /* see Annex B, page 64 of the standard */
@@ -510,11 +517,10 @@ int encoder_impl::work (int noutput_items,
 	return noutput_items;
 }
 
-encoder::sptr
-encoder::make (unsigned char pty_locale, int pty, bool ms, std::string ps,
-               double af1, double af2, bool tp, bool ta, int pi_country_code,
-               int pi_coverage_area, int pi_reference_number,
-               std::string radiotext) {
+encoder::sptr encoder::make (unsigned char pty_locale, int pty, bool ms,
+                             std::string ps, double af1, double af2, bool tp,
+                             bool ta, int pi_country_code, int pi_coverage_area,
+                             int pi_reference_number, std::string radiotext) {
 
 	return gnuradio::get_initial_sptr(
         new encoder_impl(pty_locale, pty, ms, ps, af1, af2, tp, ta,

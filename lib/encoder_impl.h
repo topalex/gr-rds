@@ -31,6 +31,8 @@ public:
                  int pi_coverage_area, int pi_reference_number,
                  std::string radiotext);
 
+    virtual void set_ps(std::string ps);
+
 private:
 	~encoder_impl();
 
@@ -87,7 +89,7 @@ private:
 	void set_pty(unsigned int pty);
 	void set_pi(unsigned int pty);
 	void set_radiotext(std::string text);
-	void set_ps(std::string text);
+
 	void count_groups();
 	void create_group(const int, const bool);
 	void prepare_group0(const bool);

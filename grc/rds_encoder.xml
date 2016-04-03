@@ -8,6 +8,7 @@
     $pty_locale, $pty, $ms, $ps, $af1, $af2, $tp, $ta,
     $pi_country_code, $pi_coverage_area, $pi_reference_number, $radiotext
 )</make>
+    <callback>set_ps($ps)</callback>
 	<param>
 		<name>PTY Locale</name>
 		<key>pty_locale</key>
