@@ -1,8 +1,9 @@
 ### Dependencies
 
-GNU Radio v3.7.
+- GNU Radio v3.7
+See the [GNU Radio Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for installation instructions.
 
-packets from your packet manager:
+- Software from your package manager. For Ubuntu systems, it's
 ```
 sudo apt-get install cmake libboost-all-dev liblog4cpp5-dev swig
 ```
@@ -32,6 +33,10 @@ http://www.youtube.com/watch?v=05i9C5lhorY
 
 HAK5 episode (including installation):
 http://www.youtube.com/watch?v=ukhrIl4JHbw
+
+FOSDEM'15 talk (video and slides):
+https://archive.fosdem.org/2015/schedule/event/sdr_rds_tmc/
+
 
 
 ### History
