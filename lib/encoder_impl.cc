@@ -288,11 +288,8 @@ void encoder_impl::set_ps(std::string ps) {
 		std::memset(PS, ' ', sizeof(PS));
 		std::memcpy(PS, ps.c_str(), len);
 
-        using std::cout;
-        using std::endl;
-        cout << "PS set to \"" << ps << "\"" << endl;
-        rebuild();
-        rebuild();
+		std::cout << "PS set to \"" << ps << "\"" << std::endl;
+		rebuild();
 }
 
 /* see Annex B, page 64 of the standard */
