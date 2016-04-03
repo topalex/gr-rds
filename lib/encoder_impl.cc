@@ -464,7 +464,7 @@ void encoder_impl::prepare_group4a(void) {
 		((toffset>0?0:1)<<5)|((abs(toffset*2))&0x1f);
 }
 
-// TMC Alert-C - http://tinyurl.com/alert-c-coding-handbook
+// TMC Alert-C
 void encoder_impl::prepare_group8a(void) {
 	infoword[1] = infoword[1] | (1 << 3) | (DP & 0x7);
 	infoword[2] = (1 << 15) | ((extent & 0x7) << 11) | (event & 0x7ff);
