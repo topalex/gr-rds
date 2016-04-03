@@ -72,8 +72,8 @@ encoder_impl::encoder_impl (unsigned char pty_locale, int pty, bool ms,
 
 	// which groups are set
 	groups[ 0] = 1; // basic tuning and switching
-	groups[ 1] = 0; // Extended Country Code
-	groups[ 2] = 0; // radio text
+	groups[ 1] = 1; // Extended Country Code
+	groups[ 2] = 1; // radio text
 	groups[ 3] = 1; // announce TMC
 	groups[ 4] = 1; // clock time
 	groups[ 8] = 1; // tmc
