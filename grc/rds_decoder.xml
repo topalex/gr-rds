@@ -2,7 +2,7 @@
 <block>
 	<name>RDS Decoder</name>
 	<key>gr_rds_decoder</key>
-	<category>RDS</category>
+	<category>[RDS]</category>
 	<import>import rds</import>
 	<make>rds.decoder($log, $debug)</make>
 	<param>

@@ -2,7 +2,7 @@
 <block>
 	<name>RDS Parser</name>
 	<key>gr_rds_parser</key>
-	<category>RDS</category>
+	<category>[RDS]</category>
 	<import>import rds</import>
 	<make>rds.parser($log, $debug, $pty_locale)</make>
 	<callback>reset();$reset;</callback>

@@ -2,7 +2,7 @@
 <block>
 	<name>RDS Encoder</name>
 	<key>gr_rds_encoder</key>
-	<category>RDS</category>
+	<category>[RDS]</category>
 	<import>import rds</import>
 	<make>rds.encoder($pty_locale, $pty, $ms, $ps, $af1,
 			$tp, $ta, $pi_country_code, $pi_coverage_area,

@@ -7,7 +7,7 @@
 <block>
 	<name>RDS Panel</name>
 	<key>gr_rds_panel</key>
-	<category>RDS</category>
+	<category>[RDS]</category>
 	<import>import rds</import>
 	<make>#set $parent = $notebook() and 'self.%s.GetPage(%s)'%$notebook() or 'self'
 rds.rdsPanel($freq, $(parent).GetWin())
