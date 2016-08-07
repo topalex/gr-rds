@@ -402,7 +402,7 @@ void encoder_impl::prepare_group2(const bool AB) {
 void encoder_impl::prepare_group1a(void) {
 	std::cout << "preparing group 1" << std::endl;
 	//infoword[1] = infoword[1] | (1 << 4); // TMC in 8A
-	infoword[2] = (0b10000000 << 8) | 0xE0;
+	infoword[2] = (0x80 << 8) | 0xE0;
 	infoword[3] = 0; // time
 }
 

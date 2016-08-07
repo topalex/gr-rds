@@ -49,6 +49,9 @@ include(GrVersion) #setup version info
 if(NOT WIN32)
     #http://gcc.gnu.org/wiki/Visibility
     add_definitions(-fvisibility=hidden)
+else()
+    #enables std::min and std::max
+    add_definitions(-DNOMINMAX)
 endif()
 
 ########################################################################
