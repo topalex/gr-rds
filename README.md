@@ -1,7 +1,6 @@
 ### Dependencies
 
-- GNU Radio v3.7.X or the v3.8 development branch (*next*)
-See the [GNU Radio Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for installation instructions.
+- GNU Radio v3.7.X or the v3.8 development branch (*next*). <br> See the [GNU Radio Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for installation instructions.
 
 - Software from your package manager. For Ubuntu systems, it's
 ```
