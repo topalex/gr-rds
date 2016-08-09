@@ -81,8 +81,31 @@ unsigned int decoder_impl::calc_syndrome(unsigned long message,
 }
 
 void decoder_impl::decode_group(unsigned int *group) {
-	pmt::pmt_t data = pmt::make_blob(group, 4 * sizeof(group));
-	message_port_pub(pmt::mp("out"), data);
+	// raw data bytes, as received from RDS.
+	// 8 info bytes, followed by 4 RDS offset chars: ABCD/ABcD/EEEE (in US)
+	unsigned char bytes[12];
+
+	// RDS information words
+	bytes[0] = (group[0] >> 8U) & 0xffU;
+	bytes[1] = (group[0]      ) & 0xffU;
+	bytes[2] = (group[1] >> 8U) & 0xffU;
+	bytes[3] = (group[1]      ) & 0xffU;
+	bytes[4] = (group[2] >> 8U) & 0xffU;
+	bytes[5] = (group[2]      ) & 0xffU;
+	bytes[6] = (group[3] >> 8U) & 0xffU;
+	bytes[7] = (group[3]      ) & 0xffU;
+
+	// RDS offset words
+	bytes[8] = offset_chars[0];
+	bytes[9] = offset_chars[1];
+	bytes[10] = offset_chars[2];
+	bytes[11] = offset_chars[3];
+
+	pmt::pmt_t data(pmt::make_blob(bytes, 12));
+	pmt::pmt_t meta(pmt::PMT_NIL);
+
+	pmt::pmt_t pdu(pmt::cons(meta, data));  // make PDU: (metadata, data) pair
+	message_port_pub(pmt::mp("out"), pdu);
 }
 
 int decoder_impl::work (int noutput_items,
@@ -99,6 +122,7 @@ int decoder_impl::work (int noutput_items,
 	unsigned long bit_distance, block_distance;
 	unsigned int block_calculated_crc, block_received_crc, checkword,dataword;
 	unsigned int reg_syndrome;
+	unsigned char offset_char('x');  // x = error while decoding the word offset
 
 /* the synchronization process is described in Annex C, page 66 of the standard */
 	while (i<noutput_items) {
@@ -140,13 +164,15 @@ int decoder_impl::work (int noutput_items,
 /* manage special case of C or C' offset word */
 					if (block_number==2) {
 						block_received_crc=checkword^offset_word[block_number];
-						if (block_received_crc==block_calculated_crc)
+						if (block_received_crc==block_calculated_crc) {
 							good_block=true;
-						else {
+							offset_char = 'C';
+						} else {
 							block_received_crc=checkword^offset_word[4];
-							if (block_received_crc==block_calculated_crc)
+							if (block_received_crc==block_calculated_crc) {
 								good_block=true;
-							else {
+								offset_char = 'c';  // C' (C-Tag)
+							} else {
 								wrong_blocks_counter++;
 								good_block=false;
 							}
@@ -154,9 +180,12 @@ int decoder_impl::work (int noutput_items,
 					}
 					else {
 						block_received_crc=checkword^offset_word[block_number];
-						if (block_received_crc==block_calculated_crc)
+						if (block_received_crc==block_calculated_crc) {
 							good_block=true;
-						else {
+							if (block_number==0) offset_char = 'A';
+							else if (block_number==1) offset_char = 'B';
+							else if (block_number==3) offset_char = 'D';
+						} else {
 							wrong_blocks_counter++;
 							good_block=false;
 						}
@@ -170,6 +199,7 @@ int decoder_impl::work (int noutput_items,
 						if (!good_block) group_assembly_started=false;
 						else {
 							group[block_number]=dataword;
+							offset_chars[block_number] = offset_char;
 							group_good_blocks_counter++;
 						}
 						if (group_good_blocks_counter==5) decode_group(group);

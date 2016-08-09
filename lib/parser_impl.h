@@ -33,7 +33,7 @@ private:
 
 	void reset();
 	void send_message(long, std::string);
-	void parse(pmt::pmt_t msg);
+	void parse(pmt::pmt_t pdu);
 	double decode_af(unsigned int);
 	void decode_optional_content(int, unsigned long int *);
 
