@@ -9,15 +9,13 @@
 	<key>gr_rds_panel</key>
 	<category>[RDS]</category>
 	<import>import rds</import>
-	<make>#set $parent = $notebook() and 'self.%s.GetPage(%s)'%$notebook() or 'self'
-rds.rdsPanel($freq, $(parent).GetWin())
-#if not $grid_pos()
-$(parent).Add(self.$(id).panel)
-#else
-$(parent).GridAdd(self.$(id).panel, $(', '.join(map(str, $grid_pos()))))
-#end if</make>
+	<make>#set $win = 'self._%s_win'%$id
+rds.rdsPanel($freq)
+self._$(id)_win = self.$(id);
+$(gui_hint()($win))
+</make>
 	<callback>set_frequency($freq);</callback>
-	
+
 	<param>
 		<name>Frequency</name>
 		<key>freq</key>
@@ -25,21 +23,15 @@ $(parent).GridAdd(self.$(id).panel, $(', '.join(map(str, $grid_pos()))))
 		<type>real</type>
 		<hide>part</hide>
 	</param>
-	
-	<param>
-		<name>Grid Position</name>
-		<key>grid_pos</key>
-		<value></value>
-		<type>grid_pos</type>
-	</param>
 
 	<param>
-		<name>Notebook</name>
-		<key>notebook</key>
+		<name>GUI Hint</name>
+		<key>gui_hint</key>
 		<value></value>
-		<type>notebook</type>
+		<type>gui_hint</type>
+		<hide>part</hide>
 	</param>
-	
+
 	<sink>
 		<name>in</name>
 		<type>message</type>
