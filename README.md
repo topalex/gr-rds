@@ -1,3 +1,7 @@
+
+Like GNU Radio, this module uses *master* and *next* branches, which are supposed to be used with the corresponding GNU Radio branches.
+I recommend staying up-to-date by using the *next* branch.
+
 ### Dependencies
 
 - GNU Radio v3.7.X or the v3.8 development branch (*next*). <br> See the [GNU Radio Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for installation instructions.
