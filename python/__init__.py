@@ -26,19 +26,13 @@ from rds_swig import *
 qt5_available = False
 try:
     from PyQt5 import Qt, QtCore, QtWidgets
-    try:
-        dummy = QtWidgets.QWidget
-        qt5_available = True
-    except AttributeError, e:
-        print(e)
-        qt5_available = False
+    qt5_available = True
 except ImportError, e:
     print(e)
     qt5_available = False
-    
+
 
 if qt5_available:
     from rdspanel import *
 else:
     print('Could not import "RDS Panel"!')
-
