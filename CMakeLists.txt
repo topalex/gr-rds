@@ -107,6 +107,9 @@ find_package(Doxygen)
 find_package(PythonLibs 2)
 
 find_package(SWIG)
+if(NOT SWIG_FOUND)
+    message(FATAL_ERROR "SWIG required to compile gr-rds")
+endif()
 
 ########################################################################
 # On Apple only, set install name and use rpath correctly, if not already set
