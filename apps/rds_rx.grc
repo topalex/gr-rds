@@ -73,12 +73,20 @@
       <value>True</value>
     </param>
     <param>
+      <key>sizing_mode</key>
+      <value>fixed</value>
+    </param>
+    <param>
       <key>thread_safe_setters</key>
       <value></value>
     </param>
     <param>
       <key>title</key>
       <value>Stereo FM receiver and RDS Decoder</value>
+    </param>
+    <param>
+      <key>placement</key>
+      <value>(0,0)</value>
     </param>
   </block>
   <block>
@@ -431,7 +439,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>-15</value>
+      <value>-3</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -529,7 +537,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -576,7 +584,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -866,7 +874,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1034, 1242)</value>
+      <value>(1032, 1244)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -909,7 +917,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>10**(1.*(volume+15)/10)</value>
+      <value>10**(1.*(volume)/10)</value>
     </param>
     <param>
       <key>affinity</key>
@@ -960,7 +968,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>10**(1.*(volume+15)/10)</value>
+      <value>10**(1.*(volume)/10)</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1227,7 +1235,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(672, 1194)</value>
+      <value>(744, 1188)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1263,7 +1271,7 @@
     </param>
     <param>
       <key>samples_per_symbol</key>
-      <value>7</value>
+      <value>4</value>
     </param>
     <param>
       <key>timing_bw</key>
@@ -1573,7 +1581,7 @@
     </param>
     <param>
       <key>decim</key>
-      <value>audio_decim</value>
+      <value>1</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1581,7 +1589,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(549, 493)</value>
+      <value>(660, 392)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1605,7 +1613,7 @@
     </param>
     <param>
       <key>taps</key>
-      <value>firdes.low_pass(2500.0,baseband_rate,2.4e3,2e3,firdes.WIN_HAMMING)</value>
+      <value>firdes.low_pass(2500.0,baseband_rate,2.6e3,2e3,firdes.WIN_HAMMING)</value>
     </param>
     <param>
       <key>type</key>
@@ -1906,6 +1914,69 @@
     <param>
       <key>note</key>
       <value>RDS</value>
+    </param>
+  </block>
+  <block>
+    <key>pfb_arb_resampler_xxx</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(416, 588)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pfb_arb_resampler_xxx_0</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>nfilts</key>
+      <value>32</value>
+    </param>
+    <param>
+      <key>rrate</key>
+      <value>19000/250e3</value>
+    </param>
+    <param>
+      <key>samp_delay</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>atten</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>taps</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>ccf</value>
     </param>
   </block>
   <block>
@@ -2522,7 +2593,7 @@
     </param>
     <param>
       <key>bw</key>
-      <value>samp_rate/bb_decim/audio_decim</value>
+      <value>19000</value>
     </param>
     <param>
       <key>alias</key>
@@ -2554,7 +2625,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(280, 684)</value>
+      <value>(208, 668)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -4017,6 +4088,10 @@
       <value>baseband_rate</value>
     </param>
     <param>
+      <key>stemplot</key>
+      <value>False</value>
+    </param>
+    <param>
       <key>tr_chan</key>
       <value>0</value>
     </param>
@@ -4426,7 +4501,7 @@
     </param>
     <param>
       <key>decim</key>
-      <value>3</value>
+      <value>2</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -4470,7 +4545,7 @@
     </param>
     <param>
       <key>samp_rate</key>
-      <value>samp_rate/bb_decim/audio_decim</value>
+      <value>19000</value>
     </param>
     <param>
       <key>sym_rate</key>
@@ -4489,7 +4564,7 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>20</value>
+      <value>gain</value>
     </param>
     <param>
       <key>bw0</key>
@@ -4509,11 +4584,11 @@
     </param>
     <param>
       <key>gain_mode0</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>if_gain0</key>
-      <value>20</value>
+      <value>24</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
@@ -4521,7 +4596,7 @@
     </param>
     <param>
       <key>gain0</key>
-      <value>gain</value>
+      <value>14</value>
     </param>
     <param>
       <key>ant10</key>
@@ -7388,12 +7463,6 @@
   </connection>
   <connection>
     <source_block_id>analog_wfm_rcv_0</source_block_id>
-    <sink_block_id>qtgui_freq_sink_x_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>analog_wfm_rcv_0</source_block_id>
     <sink_block_id>qtgui_waterfall_sink_x_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
@@ -7532,13 +7601,7 @@
   </connection>
   <connection>
     <source_block_id>freq_xlating_fir_filter_xxx_1</source_block_id>
-    <sink_block_id>qtgui_freq_sink_x_2</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>freq_xlating_fir_filter_xxx_1</source_block_id>
-    <sink_block_id>root_raised_cosine_filter_0</sink_block_id>
+    <sink_block_id>pfb_arb_resampler_xxx_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -7553,6 +7616,18 @@
     <sink_block_id>gr_rds_panel_0</sink_block_id>
     <source_key>out</source_key>
     <sink_key>in</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>pfb_arb_resampler_xxx_0</source_block_id>
+    <sink_block_id>qtgui_freq_sink_x_2</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>pfb_arb_resampler_xxx_0</source_block_id>
+    <sink_block_id>root_raised_cosine_filter_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
   </connection>
   <connection>
     <source_block_id>rational_resampler_xxx_0</source_block_id>
