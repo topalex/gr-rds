@@ -2,8 +2,12 @@ import pmt
 from gnuradio import gr, blocks
 
 from PyQt5 import Qt, QtCore, QtWidgets
+from PyQt5.QtCore import pyqtSlot, pyqtSignal
 
 class rdsPanel(gr.sync_block, QtWidgets.QWidget):
+
+	msg_signal = pyqtSignal(int, str)
+
 	def __init__(self, freq, *args, **kwds):
 		gr.sync_block.__init__(
 			self,
@@ -15,6 +19,7 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
 		self.set_msg_handler(pmt.intern('in'), self.handle_msg)
 
 		QtWidgets.QWidget.__init__(self)
+		self.msg_signal.connect(self.msg_slot)
 
 		vlayout = Qt.QVBoxLayout()
 
@@ -90,8 +95,7 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
 
 	def set_frequency(self, freq):
 		freq_str = "%.1f" % (float(freq) / 1e6)
-		self.freq.setText(freq_str)
-		self.clear_data()
+		self.msg_signal.emit(7, freq_str)
 
 	def clear_data(self):
 		self.station.setText("")
@@ -116,6 +120,11 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
 		msg_type = pmt.to_long(pmt.tuple_ref(msg, 0))
 		msg = pmt.symbol_to_string(pmt.tuple_ref(msg, 1))
 		msg = unicode(msg, errors='replace')
+
+		self.msg_signal.emit(msg_type, msg)
+
+        @pyqtSlot(int, str)
+        def msg_slot(self, msg_type, msg):
 
 		if (msg_type==0):     #program information
 			self.program.setText(msg)
@@ -163,3 +172,6 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
 			self.clock_time.setText(msg)
 		elif (msg_type==6):   #alternative frequencies
 			self.alt_freq.setText(msg)
+		elif (msg_type==7):   #alternative frequencies
+			self.freq.setText(msg)
+			self.clear_data()
