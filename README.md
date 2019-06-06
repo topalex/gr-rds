@@ -1,19 +1,20 @@
+# Development
 
-Like GNU Radio, this module uses *master* and *next* branches, which are supposed to be used with the corresponding GNU Radio branches.
-I recommend staying up-to-date by using the *next* branch.
+Like GNU Radio, this module uses *master* and *maint* branches for development.
+These branches are supposed to be used with the corresponding GNU Radio
+branches. This means: the *maint-3.7* branch is compatible with GNU Radio 3.7,
+*maint-3.8* is compatible with GNU Radio 3.8, and *master* is compatible with
+GNU Radio master, which tracks the development towards GNU Radio 3.9.
+
 
 ### Dependencies
 
-- GNU Radio v3.7.X or the v3.8 development branch (*next*). <br> See the [GNU Radio Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for installation instructions.
-
-- Software from your package manager. For Ubuntu systems, it's
-```
-sudo apt-get install cmake libboost-all-dev liblog4cpp5-dev swig
-```
+- GNU Radio. See the [GNU Radio
+  Wiki](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGR) for
+  installation instructions.
 
 
 ### Installation
-
 ```
 mkdir build
 cd build
@@ -22,7 +23,6 @@ make
 sudo make install
 sudo ldconfig
 ```
-
 
 ### Usage
 
@@ -41,7 +41,8 @@ FOSDEM'15 talk (video and slides):
 https://archive.fosdem.org/2015/schedule/event/sdr_rds_tmc/
 
 
-
 ### History
 
-Continuation of gr-rds on BitBucket (originally from Dimitrios Symeonidis https://bitbucket.org/azimout/gr-rds/ and also on CGRAN https://www.cgran.org/wiki/RDS).
+Continuation of gr-rds on BitBucket (originally from Dimitrios Symeonidis
+https://bitbucket.org/azimout/gr-rds/ and also on CGRAN
+https://www.cgran.org/wiki/RDS).
