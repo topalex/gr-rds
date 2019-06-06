@@ -18,21 +18,19 @@
 
 # The presence of this file turns this directory into a Python package
 
-# import swig generated symbols into the howto namespace
-from rds_swig import *
+'''
+This is the GNU Radio RDS module. Place your Python package
+description here (python/__init__.py).
+'''
+from __future__ import unicode_literals
+
+# import swig generated symbols into the rds namespace
+try:
+    # this might fail if the module is python-only
+    from .rds_swig import *
+except ImportError:
+    pass
 
 # import any pure python here
-# First check for Qt5
-qt5_available = False
-try:
-    from PyQt5 import Qt, QtCore, QtWidgets
-    qt5_available = True
-except ImportError, e:
-    print(e)
-    qt5_available = False
-
-
-if qt5_available:
-    from rdspanel import *
-else:
-    print('Could not import "RDS Panel"!')
+from .rdspanel import rdsPanel
+#

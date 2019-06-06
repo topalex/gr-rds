@@ -14,21 +14,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-include(GrPython)
 
 ########################################################################
 # Install public header files
 ########################################################################
-
-list(APPEND include_sources
+install(FILES
     api.h
     decoder.h
     encoder.h
-    parser.h
-)
-
-install(
-	FILES ${include_sources}
-	DESTINATION ${GR_INCLUDE_DIR}/gnuradio/rds
-	COMPONENT "rds-devel"
+    parser.h DESTINATION include/rds
 )

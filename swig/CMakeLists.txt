@@ -26,31 +26,23 @@ endif()
 include(GrSwig)
 include(GrPython)
 
-set(GR_SWIG_INCLUDE_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/
-    ${CMAKE_CURRENT_BINARY_DIR}/../include/
-)
-
 ########################################################################
 # Setup swig generation
 ########################################################################
-foreach(incdir ${GNURADIO_RUNTIME_INCLUDE_DIRS})
-    list(APPEND GR_SWIG_INCLUDE_DIRS ${incdir}/gnuradio/swig)
-endforeach(incdir)
+set(GR_SWIG_INCLUDE_DIRS $<TARGET_PROPERTY:gnuradio::runtime_swig,INTERFACE_INCLUDE_DIRECTORIES>)
+set(GR_SWIG_TARGET_DEPS gnuradio::runtime_swig)
 
 set(GR_SWIG_LIBRARIES gnuradio-rds)
+
 set(GR_SWIG_DOC_FILE ${CMAKE_CURRENT_BINARY_DIR}/rds_swig_doc.i)
-set(GR_SWIG_DOC_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/rds/
-    ${CMAKE_CURRENT_BINARY_DIR}/../include/rds/
-)
+set(GR_SWIG_DOC_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 GR_SWIG_MAKE(rds_swig rds_swig.i)
 
 ########################################################################
 # Install the build swig module
 ########################################################################
-GR_SWIG_INSTALL( TARGETS rds_swig DESTINATION ${GR_PYTHON_DIR}/rds)
+GR_SWIG_INSTALL(TARGETS rds_swig DESTINATION ${GR_PYTHON_DIR}/rds)
 
 ########################################################################
 # Install swig .i files for development

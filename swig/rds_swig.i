@@ -1,6 +1,10 @@
+/* -*- c++ -*- */
+
 #define RDS_API
 
-%include <gnuradio.i>
+%include "gnuradio.i"           // the common stuff
+
+//load generated python docstrings
 %include "rds_swig_doc.i"
 
 %{

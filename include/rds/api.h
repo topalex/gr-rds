@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #ifndef INCLUDED_RDS_API_H
 #define INCLUDED_RDS_API_H
 
 #include <gnuradio/attributes.h>
 
-#ifdef gnuradio_RDS_EXPORTS
+#ifdef gnuradio_rds_EXPORTS
 #  define RDS_API __GR_ATTR_EXPORT
 #else
 #  define RDS_API __GR_ATTR_IMPORT

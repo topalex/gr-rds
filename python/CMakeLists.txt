@@ -1,6 +1,6 @@
 # Copyright 2011 Free Software Foundation, Inc.
 #
-# This file is part of GNU Radio
+# This file is part of gr-rds
 #
 # GNU Radio is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,16 +31,13 @@ endif()
 GR_PYTHON_INSTALL(
     FILES
     __init__.py
-    rdspanel.py
-    DESTINATION ${GR_PYTHON_DIR}/rds
+    rdspanel.py DESTINATION ${GR_PYTHON_DIR}/rds
 )
 
 ########################################################################
 # Handle the unit tests
 ########################################################################
-#include(GrTest)
-#
-#set(GR_TEST_TARGET_DEPS gnuradio-rds)
-#set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
-#GR_ADD_TEST(qa_rds ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_rds.py)
+include(GrTest)
 
+set(GR_TEST_TARGET_DEPS gnuradio-rds)
+set(GR_TEST_PYTHON_DIRS ${CMAKE_BINARY_DIR}/swig)
