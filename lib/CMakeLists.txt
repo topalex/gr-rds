@@ -52,6 +52,8 @@ endif(APPLE)
 # Install built library files
 ########################################################################
 include(GrMiscUtils)
+set(VERSION "1.1.0")
+set(LIBVER "1")
 GR_LIBRARY_FOO(gnuradio-rds)
 
 ########################################################################
