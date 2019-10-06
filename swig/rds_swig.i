@@ -4,9 +4,6 @@
 
 %include "gnuradio.i"           // the common stuff
 
-//load generated python docstrings
-%include "rds_swig_doc.i"
-
 %{
 #include "rds/decoder.h"
 #include "rds/encoder.h"
