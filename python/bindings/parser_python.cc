@@ -29,7 +29,9 @@ namespace py = pybind11;
 
 void bind_parser(py::module& m)
 {
-    using parser = gr::rds::parser;
+
+    using parser    = ::gr::rds::parser;
+
 
     py::class_<parser, gr::block, gr::basic_block,
         std::shared_ptr<parser>>(m, "parser", D(parser))
@@ -40,7 +42,21 @@ void bind_parser(py::module& m)
            py::arg("pty_locale"),
            D(parser,make)
         )
+        
+
+
+
+
+        
+        .def("reset",&parser::reset,       
+            D(parser,reset)
+        )
+
         ;
+
+
+
+
 }
 
 

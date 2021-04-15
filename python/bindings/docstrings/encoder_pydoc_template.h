@@ -19,6 +19,15 @@
  static const char *__doc_gr_rds_encoder = R"doc()doc";
 
 
+ static const char *__doc_gr_rds_encoder_encoder_0 = R"doc()doc";
+
+
+ static const char *__doc_gr_rds_encoder_encoder_1 = R"doc()doc";
+
+
  static const char *__doc_gr_rds_encoder_make = R"doc()doc";
+
+
+ static const char *__doc_gr_rds_encoder_set_ps = R"doc()doc";
 
   

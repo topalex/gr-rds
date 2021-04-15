@@ -29,16 +29,27 @@ namespace py = pybind11;
 
 void bind_decoder(py::module& m)
 {
-    using decoder = gr::rds::decoder;
 
-    py::class_<decoder, gr::block, gr::basic_block, std::shared_ptr<decoder>>(m, "decoder", D(decoder))
+    using decoder    = ::gr::rds::decoder;
+
+
+    py::class_<decoder, gr::sync_block, gr::block, gr::basic_block,
+        std::shared_ptr<decoder>>(m, "decoder", D(decoder))
 
         .def(py::init(&decoder::make),
            py::arg("log"),
            py::arg("debug"),
            D(decoder,make)
         )
-    ;
+        
+
+
+
+        ;
+
+
+
+
 }
 
 

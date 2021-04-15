@@ -19,6 +19,15 @@
  static const char *__doc_gr_rds_parser = R"doc()doc";
 
 
+ static const char *__doc_gr_rds_parser_parser_0 = R"doc()doc";
+
+
+ static const char *__doc_gr_rds_parser_parser_1 = R"doc()doc";
+
+
  static const char *__doc_gr_rds_parser_make = R"doc()doc";
+
+
+ static const char *__doc_gr_rds_parser_reset = R"doc()doc";
 
   

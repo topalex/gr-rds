@@ -29,9 +29,11 @@ namespace py = pybind11;
 
 void bind_encoder(py::module& m)
 {
-    using encoder = gr::rds::encoder;
 
-    py::class_<encoder, gr::block, gr::basic_block,
+    using encoder    = ::gr::rds::encoder;
+
+
+    py::class_<encoder, gr::sync_block, gr::block, gr::basic_block,
         std::shared_ptr<encoder>>(m, "encoder", D(encoder))
 
         .def(py::init(&encoder::make),
@@ -47,8 +49,23 @@ void bind_encoder(py::module& m)
            py::arg("pi_reference_number"),
            py::arg("radiotext"),
            D(encoder,make)
-        ) 
+        )
+        
+
+
+
+
+        
+        .def("set_ps",&encoder::set_ps,       
+            py::arg("ps"),
+            D(encoder,set_ps)
+        )
+
         ;
+
+
+
+
 }
 
 

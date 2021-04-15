@@ -19,6 +19,9 @@
  static const char *__doc_gr_rds_decoder = R"doc()doc";
 
 
+ static const char *__doc_gr_rds_decoder_decoder = R"doc()doc";
+
+
  static const char *__doc_gr_rds_decoder_make = R"doc()doc";
 
   
