@@ -94,7 +94,7 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
                 self.setLayout(vlayout)
 
         def set_frequency(self, freq):
-                freq_str = "%.1f" % (float(freq) / 1e6)
+                freq_str = "%.1f" % float(freq)
                 self.msg_signal.emit(7, freq_str)
 
         def clear_data(self):

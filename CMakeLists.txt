@@ -114,6 +114,7 @@ endif(APPLE)
 # Find gnuradio build dependencies
 ########################################################################
 find_package(Doxygen)
+find_package(Boost 1.40 COMPONENTS locale REQUIRED)
 
 ########################################################################
 # PyBind11 Related

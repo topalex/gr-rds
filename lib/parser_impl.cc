@@ -23,6 +23,7 @@
 #include "tmc_events.h"
 #include <gnuradio/io_signature.h>
 #include <math.h>
+#include <boost/locale.hpp>
 
 using namespace gr::rds;
 
@@ -76,7 +77,8 @@ void parser_impl::reset() {
  * type 5 = ClockTime
  * type 6 = Alternative Frequencies */
 void parser_impl::send_message(long msgtype, std::string msgtext) {
-	pmt::pmt_t msg  = pmt::mp(msgtext);
+    std::string utf8text = boost::locale::conv::to_utf<char>(msgtext,"ISO-8859-2");
+	pmt::pmt_t msg  = pmt::mp(utf8text);
 	pmt::pmt_t type = pmt::from_long(msgtype);
 	message_port_pub(pmt::mp("out"), pmt::make_tuple(type, msg));
 }

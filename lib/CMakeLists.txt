@@ -24,8 +24,9 @@ if(NOT rds_sources)
 endif(NOT rds_sources)
 
 add_library(gnuradio-rds SHARED ${rds_sources})
-target_link_libraries(gnuradio-rds gnuradio::gnuradio-runtime)
+target_link_libraries(gnuradio-rds gnuradio::gnuradio-runtime ${Boost_LIBRARIES})
 target_include_directories(gnuradio-rds
+    PUBLIC ${Boost_INCLUDE_DIR}
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>
   )
