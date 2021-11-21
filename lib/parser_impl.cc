@@ -23,6 +23,8 @@
 #include "tmc_events.h"
 #include <gnuradio/io_signature.h>
 #include <math.h>
+#include <boost/locale.hpp>
+#include <iomanip>
 
 using namespace gr::rds;
 
