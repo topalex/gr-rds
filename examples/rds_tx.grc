@@ -907,13 +907,20 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
+    debug: 'False'
+    log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
     ms: 'True'
-    pi_country_code: '13'
-    pi_coverage_area: '3'
+    mono_stereo: 'True'
+    artificial_head: 'False'
+    compressed: 'False'
+    static_pty: 'True'
+    pi_country_code: '1'
+    pi_coverage_area: '0'
     pi_reference_number: '147'
-    ps: WDR 3
+    extended_country_code: '0'
+    ps: GNURadio
     pty: '14'
     pty_locale: '0'
     radiotext: GNU Radio <3

@@ -22,7 +22,6 @@
 #include "constants.h"
 #include "tmc_events.h"
 #include <gnuradio/io_signature.h>
-#include <math.h>
 #include <boost/locale.hpp>
 #include <iomanip>
 
@@ -61,9 +60,6 @@ void parser_impl::reset() {
 	traffic_announcement           = false;
 	music_speech                   = false;
 	program_type                   = 0;
-	pi_country_identification      = 0;
-	pi_area_coverage               = 0;
-	pi_program_reference_number    = 0;
 	mono_stereo                    = false;
 	artificial_head                = false;
 	compressed                     = false;
@@ -385,42 +381,44 @@ void parser_impl::decode_type8(unsigned int *group, bool B){
 	bool D = (group[2] > 15) & 0x1; // 1 = diversion recommended
 	static unsigned long int free_format[4];
 	static int no_groups = 0;
+	std::stringstream TMC;
 
 	if(T) { // tuning info
-		lout << "#tuning info# ";
 		int variant = group[1] & 0xf;
 		if((variant > 3) && (variant < 10)) {
-			lout << "variant: " << variant << " - "
-				<< group[2] << " " << group[3] << std::endl;
+			TMC << "variant: " << variant << " - " << group[2] << " " << group[3];
 		} else {
-			lout << "invalid variant: " << variant << std::endl;
+			TMC << "invalid variant: " << variant;
 		}
-
+		lout << "#tuning info# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 	} else if(F || D) { // single-group or 1st of multi-group
 		unsigned int dp_ci    =  group[1]        & 0x7;   // duration & persistence or continuity index
 		bool sign             = (group[2] >> 14) & 0x1;   // event direction, 0 = +, 1 = -
 		unsigned int extent   = (group[2] >> 11) & 0x7;   // number of segments affected
 		unsigned int event    =  group[2]        & 0x7ff; // event code, defined in ISO 14819-2
 		unsigned int location =  group[3];                // location code, defined in ISO 14819-3
-		lout << "#user msg# " << (D ? "diversion recommended, " : "");
+		TMC << (D ? "diversion recommended, " : "");
 		if(F) {
-			lout << "single-grp, duration:" << tmc_duration[dp_ci][0];
+			TMC << "single-grp, duration:" << tmc_duration[dp_ci][0];
 		} else {
-			lout << "multi-grp, continuity index:" << dp_ci;
+			TMC << "multi-grp, continuity index:" << dp_ci;
 		}
 		int event_line = tmc_event_code_index[event][1];
-		lout << ", extent:" << (sign ? "-" : "") << extent + 1 << " segments"
+		TMC << ", extent:" << (sign ? "-" : "") << extent + 1 << " segments"
 			<< ", event" << event << ":" << tmc_events[event_line][1]
-			<< ", location:" << location << std::endl;
-
+			<< ", location:" << location;
+		lout << "#user msg# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 	} else { // 2nd or more of multi-group
 		unsigned int ci = group[1] & 0x7;          // countinuity index
 		bool sg = (group[2] >> 14) & 0x1;          // second group
 		unsigned int gsi = (group[2] >> 12) & 0x3; // group sequence
-		lout << "#user msg# multi-grp, continuity index:" << ci
+		TMC << "multi-grp, continuity index:" << ci
 			<< (sg ? ", second group" : "") << ", gsi:" << gsi;
-		lout << ", free format: " << (group[2] & 0xfff) << " "
-			<< group[3] << std::endl;
+		TMC << ", free format: " << (group[2] & 0xfff) << " " << group[3];
+		lout << "#user msg# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 		// it's not clear if gsi=N-2 when gs=true
 		if(sg) {
 			no_groups = gsi;
@@ -582,8 +580,8 @@ void parser_impl::parse(pmt::pmt_t pdu) {
 	unsigned int group_type = (unsigned int)((group[1] >> 12) & 0xf);
 	bool ab = (group[1] >> 11 ) & 0x1;
 
-	lout << std::setfill('0') << std::setw(2) << group_type << (ab ? 'B' : 'A') << " ";
-	lout << "(" << rds_group_acronyms[group_type] << ")";
+	dout << std::setfill('0') << std::setw(2) << group_type << (ab ? 'B' : 'A') << " ";
+	dout << "(" << rds_group_acronyms[group_type] << ")";
 
 	program_identification = group[0];     // "PI"
 	program_type = (group[1] >> 5) & 0x1f; // "PTY"
@@ -595,14 +593,14 @@ void parser_impl::parse(pmt::pmt_t pdu) {
 	send_message(0, pistring.str());
 	send_message(2, pty_table[program_type][pty_locale]);
 
-	lout << " - PI:" << pistring.str() << " - " << "PTY:" << pty_table[program_type][pty_locale];
-	lout << " (country:" << pi_country_codes[pi_country_identification - 1][0];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][1];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][2];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][3];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][4];
-	lout << ", area:" << coverage_area_codes[pi_area_coverage];
-	lout << ", program:" << int(pi_program_reference_number) << ")" << std::endl;
+	dout << " - PI:" << pistring.str() << " - " << "PTY:" << pty_table[program_type][pty_locale];
+	dout << " (country:" << pi_country_codes[pi_country_identification - 1][0];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][1];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][2];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][3];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][4];
+	dout << ", area:" << coverage_area_codes[pi_area_coverage];
+	dout << ", program:" << int(pi_program_reference_number) << ")" << std::endl;
 
 	switch (group_type) {
 		case 0:

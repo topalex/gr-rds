@@ -56,9 +56,6 @@ private:
 
 	unsigned int   program_identification;
 	unsigned char  program_type;
-	unsigned char  pi_country_identification;
-	unsigned char  pi_area_coverage;
-	unsigned char  pi_program_reference_number;
 	char           radiotext[65];
 	char           program_service_name[9];
 	bool           radiotext_AB_flag;

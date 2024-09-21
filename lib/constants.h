@@ -25,7 +25,6 @@
 static const unsigned int offset_pos[5]={0,1,2,3,2};
 static const unsigned int offset_word[5]={252,408,360,436,848};
 static const unsigned int syndrome[5]={383,14,303,663,748};
-static const char * const offset_name[]={"A","B","C","D","C'"};
 
 /* Annex F of RBDS Standard Table F.1 (North America) and
  * Table F.2 (Europe) */
