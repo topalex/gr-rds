@@ -30,15 +30,36 @@ parameters:
         Folk Music / Unassigned, Documentary / Weather, Alarm Test / Emergency Test,
         Alarm / Emergency]
 -   id: ms
-    label: MS
+    label: Music/Speech
     dtype: bool
     default: 'True'
     options: ['True', 'False']
     option_labels: [Music, Speech]
+-   id: mono_stereo
+    label: Stereo
+    dtype: bool
+    default: 'True'
+    options: [ 'True', 'False' ]
+    option_labels: [ Stereo, Mono ]
+-   id: artificial_head
+    label: Artificial head
+    dtype: bool
+    default: 'False'
+    options: [ 'True', 'False' ]
+-   id: compressed
+    label: Compressed
+    dtype: bool
+    default: 'False'
+    options: [ 'True', 'False' ]
+-   id: static_pty
+    label: Static PTY
+    dtype: bool
+    default: 'True'
+    options: [ 'True', 'False' ]
 -   id: ps
     label: PS
     dtype: string
-    default: WDR 3
+    default: GNURadio
 -   id: af1
     label: AF1
     dtype: float
@@ -56,14 +77,18 @@ parameters:
 -   id: pi_country_code
     label: PI Country Code
     dtype: int
-    default: '13'
+    default: '1'
     options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13',
-        '15']
-    option_labels: [DE, DZ, AD, IL, IT, BE, RU, PS, AL, AT, HU, MT, DE, EG]
+        '14', '15']
+    option_labels: [DE | GR | MA | __ | MD, DZ | CY | CZ | IE | EE, AD | SM | PL | TR | __,
+            IL | CH | VA | MK | __, IT | JO | SK | __ | __, BE | FI | SY | __ | UA,
+            RU | LU | TN | __ | __, PS | BG | __ | NL | PT, AL | DK | LI | LV | SI,
+            AT | GI | IS | LB | __, HU | IQ | MC | __ | __, MT | GB | LT | HR | __,
+            DE | LY | YU | __ | __, __ | RO | ES | SE | __, EG | FR | NO | BY | BA]
 -   id: pi_coverage_area
     label: PI Coverage Area
     dtype: int
-    default: '3'
+    default: '0'
     options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15']
     option_labels: [Local, International, National, Supra-regional, Regional 1, Regional
@@ -73,10 +98,32 @@ parameters:
     label: PI Program Reference Number
     dtype: int
     default: '147'
+-   id: extended_country_code
+    label: Extended Country Code
+    dtype: int
+    default: '0'
+    options: [ '0', '1', '2', '3', '4' ]
+    option_labels: [DE | DZ | AD | IL | IT | BE | RU | PS | AL | AT | HU | MT | DE | __ | EG,
+            GR | CY | SM | CH | JO | FI | LU | BG | DK | GI | IQ | GB | LY | RO | FR,
+            MA | CZ | PL | VA | SK | SY | TN | __ | LI | IS | MC | LT | YU | ES | NO,
+            __ | IE | TR | MK | __ | __ | __ | NL | LV | LB | __ | HR | __ | SE | BY,
+            MD | EE | __ | __ | __ | UA | __ | PT | SI | __ | __ | __ | __ | __ | BA]
 -   id: radiotext
     label: Radiotext
     dtype: string
     default: GNU Radio <3
+-   id: log
+    label: Log
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: [Enable, Disable]
+-   id: debug
+    label: Debug
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: [Enable, Disable]
 
 inputs:
 -   domain: message
@@ -89,11 +136,12 @@ outputs:
 
 templates:
     imports: import rds
-    make: "rds.encoder(${pty_locale}, ${pty}, ${ms}, ${ps}, ${af1},\n\t\t\t${tp},\
-        \ ${ta}, ${pi_country_code}, ${pi_coverage_area},\n\t\t\t${pi_reference_number},\
-        \ ${radiotext})\n\t"
+    make: "rds.encoder(${pty_locale}, ${pty}, ${ms},\n\t\t\t${mono_stereo},\
+        \ ${artificial_head}, ${compressed}, ${static_pty}, ${ps}, ${af1},\n\t\t\t${tp},\
+        \ ${ta}, ${pi_country_code}, ${pi_coverage_area}, ${pi_reference_number},\
+        \ ${extended_country_code}, ${radiotext}, \n\t\t\t${log}, ${debug})\n\t"
     callbacks:
-    - set_ps(${ps})
+    - update_ps(${ps})
 
 documentation: |-
     PTY: Program Type (depending on PTY locale)

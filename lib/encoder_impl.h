@@ -19,6 +19,7 @@
 
 #include <rds/encoder.h>
 #include <gnuradio/thread/thread.h>
+#include <chrono>
 
 namespace gr {
 namespace rds {
@@ -26,12 +27,14 @@ namespace rds {
 class encoder_impl : public encoder
 {
 public:
-	encoder_impl(unsigned char pty_locale, int pty, bool ms, std::string ps,
-                 double af1, bool tp, bool ta, int pi_country_code,
-                 int pi_coverage_area, int pi_reference_number,
-                 std::string radiotext);
+	encoder_impl(unsigned char pty_locale, int pty, bool ms,
+				 bool mono_stereo, bool artificial_head, bool compressed, bool static_pty,
+				 std::string ps, double af1, bool tp,
+				 bool ta, int pi_country_code, int pi_coverage_area,
+				 int pi_reference_number, int extended_country_code, std::string radiotext,
+				 bool log, bool debug);
 
-    virtual void set_ps(std::string ps);
+	virtual void update_ps(std::string ps);
 
 private:
 	~encoder_impl();
@@ -46,15 +49,23 @@ private:
 	unsigned char **buffer;
 	unsigned char pty_locale;
 
+	bool          log;
+	bool          debug;
+
 	// FIXME make this a struct (or a class)
-	unsigned char PTY;
+	unsigned int PTY;
 	unsigned char radiotext[64];
 	unsigned char PS[8];
 	bool TA;
 	bool TP;
 	bool MS;
+	bool STEREO;
+	bool AH;
+	bool CMP;
+	bool stPTY;
 	unsigned int PI;
 	double AF1;
+	unsigned int ECC;
 
 	int DP;
 	int extent;
@@ -69,8 +80,9 @@ private:
  * each type 2B group contains 2 out of 32 RadioText characters;
  * this is used to count 0..15 and send all RadioText characters */
 	int d_g2_counter;
-/* points to the current buffer being prepared/streamed
- * used in create_group() and in work() */
+/* points to the current buffer being prepared, used in create_group() */
+	int d_group_counter;
+/* points to the current buffer being streamed, used in in work() */
 	int d_current_buffer;
 /* loops through the buffer, pushing out the symbols */
 	int d_buffer_bit_counter;
@@ -78,15 +90,27 @@ private:
 /* nbuffers might be != ngroups, e.g. group 0A needs 4 buffers */
 	int nbuffers;
 
+	double target_rate;
+	double max_buffer_time;
+	unsigned int minutes;
+	std::chrono::system_clock::time_point system_clock;
+	std::optional<std::chrono::steady_clock::time_point> previous_work;
+
 // Functions
-	void rebuild();
+	void rebuild(bool lock = true);
+	void set_mono_stereo(bool mono_stereo);
+	void set_artificial_head(bool artificial_head);
+	void set_compressed(bool compressed);
+	void set_static_pty(bool static_pty);
 	void set_ms(bool ms);
 	void set_tp(bool tp);
 	void set_ta(bool ta);
 	void set_af1(double af1);
 	void set_pty(unsigned int pty);
 	void set_pi(unsigned int pty);
+	void set_extended_country_code(unsigned int extended_country_code);
 	void set_radiotext(std::string text);
+	void set_ps(std::string ps);
 
 	void count_groups();
 	void create_group(const int, const bool);

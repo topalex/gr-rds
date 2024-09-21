@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(encoder.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(baad12f97f57978fc0a3f0b5fec44341)                     */
+/* BINDTOOL_HEADER_FILE_HASH(d422863bf669722e9e86e119d6f98daf)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -40,6 +40,10 @@ void bind_encoder(py::module& m)
            py::arg("pty_locale"),
            py::arg("pty"),
            py::arg("ms"),
+           py::arg("mono_stereo"),
+           py::arg("artificial_head"),
+           py::arg("compressed"),
+           py::arg("static_pty"),
            py::arg("ps"),
            py::arg("af1"),
            py::arg("tp"),
@@ -47,7 +51,10 @@ void bind_encoder(py::module& m)
            py::arg("pi_country_code"),
            py::arg("pi_coverage_area"),
            py::arg("pi_reference_number"),
+           py::arg("extended_country_code"),
            py::arg("radiotext"),
+           py::arg("log"),
+           py::arg("debug"),
            D(encoder,make)
         )
         
@@ -56,9 +63,9 @@ void bind_encoder(py::module& m)
 
 
         
-        .def("set_ps",&encoder::set_ps,       
+        .def("update_ps",&encoder::update_ps,
             py::arg("ps"),
-            D(encoder,set_ps)
+            D(encoder,update_ps)
         )
 
         ;
