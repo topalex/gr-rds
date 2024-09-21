@@ -22,7 +22,6 @@
 #include "constants.h"
 #include "tmc_events.h"
 #include <gnuradio/io_signature.h>
-#include <math.h>
 #include <boost/locale.hpp>
 #include <iomanip>
 
@@ -61,9 +60,6 @@ void parser_impl::reset() {
 	traffic_announcement           = false;
 	music_speech                   = false;
 	program_type                   = 0;
-	pi_country_identification      = 0;
-	pi_area_coverage               = 0;
-	pi_program_reference_number    = 0;
 	mono_stereo                    = false;
 	artificial_head                = false;
 	compressed                     = false;
@@ -584,8 +580,8 @@ void parser_impl::parse(pmt::pmt_t pdu) {
 	unsigned int group_type = (unsigned int)((group[1] >> 12) & 0xf);
 	bool ab = (group[1] >> 11 ) & 0x1;
 
-	lout << std::setfill('0') << std::setw(2) << group_type << (ab ? 'B' : 'A') << " ";
-	lout << "(" << rds_group_acronyms[group_type] << ")";
+	dout << std::setfill('0') << std::setw(2) << group_type << (ab ? 'B' : 'A') << " ";
+	dout << "(" << rds_group_acronyms[group_type] << ")";
 
 	program_identification = group[0];     // "PI"
 	program_type = (group[1] >> 5) & 0x1f; // "PTY"
@@ -597,14 +593,14 @@ void parser_impl::parse(pmt::pmt_t pdu) {
 	send_message(0, pistring.str());
 	send_message(2, pty_table[program_type][pty_locale]);
 
-	lout << " - PI:" << pistring.str() << " - " << "PTY:" << pty_table[program_type][pty_locale];
-	lout << " (country:" << pi_country_codes[pi_country_identification - 1][0];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][1];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][2];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][3];
-	lout << "/" << pi_country_codes[pi_country_identification - 1][4];
-	lout << ", area:" << coverage_area_codes[pi_area_coverage];
-	lout << ", program:" << int(pi_program_reference_number) << ")" << std::endl;
+	dout << " - PI:" << pistring.str() << " - " << "PTY:" << pty_table[program_type][pty_locale];
+	dout << " (country:" << pi_country_codes[pi_country_identification - 1][0];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][1];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][2];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][3];
+	dout << "/" << pi_country_codes[pi_country_identification - 1][4];
+	dout << ", area:" << coverage_area_codes[pi_area_coverage];
+	dout << ", program:" << int(pi_program_reference_number) << ")" << std::endl;
 
 	switch (group_type) {
 		case 0:
