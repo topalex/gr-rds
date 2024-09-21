@@ -91,6 +91,15 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
 
                 vlayout.addLayout(hlayout)
 
+                hlayout = Qt.QHBoxLayout()
+
+                hlayout.addWidget(Qt.QLabel("TMC"))
+                self.TMC = Qt.QLabel("")
+                self.TMC.setStyleSheet("font-weight: bold")
+                hlayout.addWidget(self.TMC)
+
+                vlayout.addLayout(hlayout)
+
                 self.setLayout(vlayout)
 
         def set_frequency(self, freq):
@@ -111,6 +120,7 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
                 self.clock_time.setText("")
                 self.alt_freq.setText("")
                 self.radiotext.setText("")
+                self.TMC.setText("")
 
         def handle_msg(self, msg):
 
@@ -175,3 +185,5 @@ class rdsPanel(gr.sync_block, QtWidgets.QWidget):
                 elif (msg_type==7):   #alternative frequencies
                         self.freq.setText(msg)
                         self.clear_data()
+                elif (msg_type==8):   # TMC
+                        self.TMC.setText(msg)

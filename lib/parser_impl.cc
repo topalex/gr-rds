@@ -385,42 +385,44 @@ void parser_impl::decode_type8(unsigned int *group, bool B){
 	bool D = (group[2] > 15) & 0x1; // 1 = diversion recommended
 	static unsigned long int free_format[4];
 	static int no_groups = 0;
+	std::stringstream TMC;
 
 	if(T) { // tuning info
-		lout << "#tuning info# ";
 		int variant = group[1] & 0xf;
 		if((variant > 3) && (variant < 10)) {
-			lout << "variant: " << variant << " - "
-				<< group[2] << " " << group[3] << std::endl;
+			TMC << "variant: " << variant << " - " << group[2] << " " << group[3];
 		} else {
-			lout << "invalid variant: " << variant << std::endl;
+			TMC << "invalid variant: " << variant;
 		}
-
+		lout << "#tuning info# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 	} else if(F || D) { // single-group or 1st of multi-group
 		unsigned int dp_ci    =  group[1]        & 0x7;   // duration & persistence or continuity index
 		bool sign             = (group[2] >> 14) & 0x1;   // event direction, 0 = +, 1 = -
 		unsigned int extent   = (group[2] >> 11) & 0x7;   // number of segments affected
 		unsigned int event    =  group[2]        & 0x7ff; // event code, defined in ISO 14819-2
 		unsigned int location =  group[3];                // location code, defined in ISO 14819-3
-		lout << "#user msg# " << (D ? "diversion recommended, " : "");
+		TMC << (D ? "diversion recommended, " : "");
 		if(F) {
-			lout << "single-grp, duration:" << tmc_duration[dp_ci][0];
+			TMC << "single-grp, duration:" << tmc_duration[dp_ci][0];
 		} else {
-			lout << "multi-grp, continuity index:" << dp_ci;
+			TMC << "multi-grp, continuity index:" << dp_ci;
 		}
 		int event_line = tmc_event_code_index[event][1];
-		lout << ", extent:" << (sign ? "-" : "") << extent + 1 << " segments"
+		TMC << ", extent:" << (sign ? "-" : "") << extent + 1 << " segments"
 			<< ", event" << event << ":" << tmc_events[event_line][1]
-			<< ", location:" << location << std::endl;
-
+			<< ", location:" << location;
+		lout << "#user msg# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 	} else { // 2nd or more of multi-group
 		unsigned int ci = group[1] & 0x7;          // countinuity index
 		bool sg = (group[2] >> 14) & 0x1;          // second group
 		unsigned int gsi = (group[2] >> 12) & 0x3; // group sequence
-		lout << "#user msg# multi-grp, continuity index:" << ci
+		TMC << "multi-grp, continuity index:" << ci
 			<< (sg ? ", second group" : "") << ", gsi:" << gsi;
-		lout << ", free format: " << (group[2] & 0xfff) << " "
-			<< group[3] << std::endl;
+		TMC << ", free format: " << (group[2] & 0xfff) << " " << group[3];
+		lout << "#user msg# " << TMC.str() << std::endl;
+		send_message(8,TMC.str());
 		// it's not clear if gsi=N-2 when gs=true
 		if(sg) {
 			no_groups = gsi;
